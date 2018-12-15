@@ -30,13 +30,15 @@ func (r *rand) next() uint32 {
 var theRand = &rand{12345678, 4185243, 776511, 45411}
 
 func update(screen *ebiten.Image) error {
-	// Percentage of smaller rectages W.r.t the screen measurements
-	const noiseRectCount = 10
-	const rectSizeHorizontal =  screenWidth / noiseRectCount
-	const rectSizeVertical =  screenHeight / noiseRectCount
-
-	for i := 0; i < noiseRectCount; i++ {	
-		for j := 0; j < noiseRectCount; j++ {
+	// Percentage of smaller rectagles W.r.t the screen measurements
+	const noiseRectPercent = 10
+	const rectSizeHorizontal =  (screenWidth / 100) * noiseRectPercent
+	const rectSizeVertical =  (screenHeight / 100) * noiseRectPercent
+	// Number of rectagles
+	const rectCountHorizontal = screenWidth / rectSizeHorizontal
+	const rectCountVertical = screenHeight / rectSizeVertical
+	for i := 0; i < rectCountVertical; i++ {	
+		for j := 0; j < rectCountHorizontal; j++ {
 			// Generate the noise with random RGB values.
 			x := theRand.next()
 			randomColor := uint8(x >> 24)
